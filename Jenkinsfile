@@ -11,22 +11,22 @@ pipeline {
         stage('Setup Python') {
             steps {
                 script {
-                    // 检查Python环境
-                    sh 'python --version'
-                    sh 'pip --version'
+                    // 检查Python环境 - 使用bat而不是sh
+                    bat 'python --version'
+                    bat 'pip --version'
                 }
             }
         }
         
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                bat 'pip install -r requirements.txt'
             }
         }
         
         stage('Run Tests') {
             steps {
-                sh 'python -m pytest test_todo_manager.py -v'
+                bat 'python -m unittest test_todo_manager.py -v'
             }
         }
         
