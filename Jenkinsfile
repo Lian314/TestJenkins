@@ -13,14 +13,14 @@ pipeline {
                 script {
                     // 检查Python环境 - 使用bat而不是sh
                     bat 'python --version'
-                    bat 'pip --version'
+                    bat 'python -m pip --version'
                 }
             }
         }
         
         stage('Install Dependencies') {
             steps {
-                bat 'pip install -r requirements.txt'
+                bat 'python -m pip install -r requirements.txt'
             }
         }
         
