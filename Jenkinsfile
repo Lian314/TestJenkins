@@ -2,6 +2,15 @@ pipeline {
     agent any
     
     stages {
+        stage('Clean Workspace') {
+            steps {
+                script {
+                    echo 'Cleaning workspace...'
+                    deleteDir()
+                }
+            }
+        }
+        
         stage('Checkout') {
             steps {
                 checkout scm
@@ -11,7 +20,6 @@ pipeline {
         stage('Setup Python') {
             steps {
                 script {
-                    // 检查Python环境 - 使用bat而不是sh
                     bat 'python --version'
                     bat 'python -m pip --version'
                 }
