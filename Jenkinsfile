@@ -1,42 +1,32 @@
 pipeline {
-    agent any
-    
+    agent {
+        docker {
+
+            image 'my-todo-app:latest'
+
+            reuseNode true
+        }
+    }
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        
-        stage('Setup Python') {
+
+
+        stage('Run Tests in Docker') {
             steps {
-                script {
-                    // 检查Python环境 - 使用bat而不是sh
-                    bat 'python --version'
-                    bat 'python -m pip --version'
-                }
+
+                sh 'python -m unittest discover -v'
             }
         }
-        
-        stage('Install Dependencies') {
-            steps {
-                bat 'python -m pip install -r requirements.txt'
-            }
-        }
-        
-        stage('Run Tests') {
-            steps {
-                bat 'python -m unittest test_todo_manager.py -v'
-            }
-        }
-        
         stage('Build') {
             steps {
-                echo 'Build completed successfully'
+                echo 'Docker completed！'
             }
         }
     }
-    
     post {
         always {
             echo 'Pipeline completed'
